@@ -10,8 +10,8 @@ import ru.me.services.LibraryService;
 @RestController
 @RequestMapping("/library")
 public class LibraryController {
-    private ApplicationContext context = new ClassPathXmlApplicationContext("SpringContext.xml");
-    private LibraryService libraryService = (LibraryService) context.getBean("storageService");
+    private static ApplicationContext context = new ClassPathXmlApplicationContext("SpringContext.xml");
+    private static LibraryService libraryService = (LibraryService) context.getBean("storageService");
    // private LibraryService libraryService;
 
 
