@@ -35,6 +35,8 @@ CREATE TABLE author (
   ID BIGINT NOT NULL PRIMARY KEY,
   NAME VARCHAR(100)
 );
+
+INSERT INTO author VALUES (1, 'Тестовый автор 1');
 -- End Author
 
 --Book
