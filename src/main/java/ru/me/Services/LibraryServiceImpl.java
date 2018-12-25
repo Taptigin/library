@@ -1,26 +1,22 @@
-package ru.me.Services;
+package ru.me.services;
 
-
-import org.springframework.stereotype.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.me.DAO.LibraryDao;
 import ru.me.models.Author;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-
-@Service("libraryService")
-@Repository
+/**
+ * Created by Александр on 25.12.2018.
+ */
+@Service("storageService")
 public class LibraryServiceImpl implements LibraryService{
 
-    @PersistenceContext
-    private EntityManager em;
+    @Autowired
+    private LibraryDao libraryDao;
+
 
     @Override
     public Author getAuthorByName(String authorName) {
-        final String stringQuery = "select a from Author a where a.name = :authorName";
-        TypedQuery<Author> query = em.createQuery(stringQuery, Author.class);
-        query.setParameter("authorName", authorName);
-        return query.getSingleResult();
+        return libraryDao.getAuthorByName(authorName);
     }
 }
