@@ -1,6 +1,5 @@
 package ru.me.models;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -15,7 +15,9 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "author")
-public class Author {
+public class Author implements Serializable{
+
+    private static final long serialVersionUID = 4583313438864535725L;
     private long id;
     private String name;
     private final static String SEQUENCE_NAME = "authorSeq";
