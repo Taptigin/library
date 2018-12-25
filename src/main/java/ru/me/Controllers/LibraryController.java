@@ -16,10 +16,10 @@ public class LibraryController {
    // private LibraryService libraryService;
 
 
-    @Autowired
-    public void setLibraryService(LibraryService libraryService) {
-        this.libraryService = libraryService;
-    }
+//    @Autowired
+//    public void setLibraryService(LibraryService libraryService) {
+//        this.libraryService = libraryService;
+//    }
 
     public static void main(String[] args) {
         new LibraryController().start();
