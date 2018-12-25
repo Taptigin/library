@@ -8,7 +8,8 @@ import ru.me.Services.LibraryService;
 @RequestMapping("/library")
 public class LibraryController {
 
-    private LibraryService productService;
+    private LibraryService libraryService;
+
 
 
 }
