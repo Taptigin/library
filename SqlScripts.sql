@@ -9,3 +9,10 @@ TABLESPACE = pg_default
 LC_COLLATE = 'Russian_Russia.1251'
 LC_CTYPE = 'Russian_Russia.1251'
 CONNECTION LIMIT = -1;
+
+CREATE TABLE users (
+  ID BIGINT PRIMARY KEY NOT NULL,
+  Name VARCHAR(100),
+  Password VARCHAR(100),
+  isAdmin BOOLEAN NOT NULL);
+
