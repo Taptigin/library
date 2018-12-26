@@ -16,22 +16,10 @@ public class LibraryController {
     private AuthorService authorService;
 
 
-//    @Autowired
-//    public void setLibraryService(LibraryService libraryService) {
-//        this.libraryService = libraryService;
-//    }
 
-//    public static void main(String[] args) {
-//        new LibraryController().start();
-//    }
-//
-//    void start(){
-//        Author author =  libraryService.getAuthorByName("Тестовый автор 1");
-//        System.out.println(author.getName());
-//    }
 
     @RequestMapping(value = "/show", method = RequestMethod.GET)
-    public String getAuthor(){
+    public synchronized String getAuthor(){
         List<Author> authorList = authorService.findAllByName("Тестовый автор 1");
         return authorList.get(0).getName();
     }
