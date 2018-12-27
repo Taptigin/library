@@ -19,30 +19,11 @@ public class LibraryController {
     @Autowired
     private AuthorService authorService;
 
-//    @RequestMapping(value = "/addAuthor", method = RequestMethod.PUT)
-//    public synchronized void addAuthor(@RequestParam(value = "name") String name){
-//        Author author = new Author();
-//        author.setName(name);
-//        authorService.createAuthor(author);
-//    }
-
     @RequestMapping(value = "/addAuthor", method = RequestMethod.POST)
-    public ResponseEntity saveProduct(@RequestBody Author author){
+    public ResponseEntity addAuthor(@RequestBody Author author){
         authorService.createAuthor(author);
         return new ResponseEntity("Product saved successfully", HttpStatus.OK);
     }
-
-
-//    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-//    public ResponseEntity updateProduct(@PathVariable Integer id, @RequestBody Product product){
-//        Product storedProduct = productService.getProductById(id);
-//        storedProduct.setDescription(product.getDescription());
-//        storedProduct.setImageUrl(product.getImageUrl());
-//        storedProduct.setPrice(product.getPrice());
-//        productService.saveProduct(storedProduct);
-//        return new ResponseEntity("Product updated successfully", HttpStatus.OK);
-//    }
-
 
     @RequestMapping(value = "/show", method = RequestMethod.GET)
     public synchronized String getAuthor(){
