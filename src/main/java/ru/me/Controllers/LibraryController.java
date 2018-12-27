@@ -22,7 +22,7 @@ public class LibraryController {
     @RequestMapping(value = "/addAuthor", method = RequestMethod.POST)
     public ResponseEntity addAuthor(@RequestBody Author author){
         authorService.createAuthor(author);
-        return new ResponseEntity("Product saved successfully", HttpStatus.OK);
+        return new ResponseEntity("Author saved successfully", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/show", method = RequestMethod.GET)
