@@ -16,8 +16,8 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     @Bean
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .select().apis(RequestHandlerSelectors.basePackage("guru.springframework.controllers"))
-                .paths(regex("/product.*"))
+                .select().apis(RequestHandlerSelectors.basePackage("library.src.main.java.ru.me.Controllers"))
+                .paths(regex("/library.*"))
                 .build();
 
     }
