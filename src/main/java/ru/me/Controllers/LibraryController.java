@@ -25,10 +25,10 @@ public class LibraryController {
         return new ResponseEntity("Author saved successfully", HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/show", method = RequestMethod.GET)
-    public synchronized String getAuthor(){
-        List<Author> authorList = authorService.findAllByName("Тестовый автор 1");
-        return authorList.get(0).getName();
+    @RequestMapping(value = "/showAll", method = RequestMethod.GET)
+    public synchronized List<Author> getAuthor(){
+        List<Author> authorList = authorService.findAll();
+        return authorList;
     }
 
 }

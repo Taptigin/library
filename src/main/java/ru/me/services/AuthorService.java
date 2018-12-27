@@ -27,4 +27,8 @@ public class AuthorService {
     public List<Author> findAllByName(String name){
         return authorRepository.findAllByName(name);
     }
+
+    public List<Author> findAll(){
+        return authorRepository.findAll();
+    }
 }
