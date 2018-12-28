@@ -24,7 +24,12 @@ public class BookController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public synchronized ResponseEntity addBook(@RequestBody Book book){
-        bookService.createBook(book);
+        try{
+            bookService.createBook(book);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity("Book name not unique", HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity("Book saved successfully", HttpStatus.OK);
     }
 
