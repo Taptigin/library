@@ -1,6 +1,7 @@
 package ru.me.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.me.models.Author;
 import ru.me.models.Author_;
@@ -21,7 +22,7 @@ import java.util.List;
 public class AuthorService {
 
     @Autowired
-    EntityManager em;
+    private EntityManager em;
 
     @Autowired
     private final AuthorRepository authorRepository;
@@ -43,14 +44,8 @@ public class AuthorService {
     }
 
     public List<Author> test() {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Author> cq = cb.createQuery(Author.class);
-        Root<Author> root = cq.from(Author.class);
-
-        cq.select(root).where(cb.greaterThan(root.get(Author_.id), 0L));
-        Query query = em.createQuery(cq);
-        List<Author> lst = query.getResultList();
-        return lst;
+        final Specification<Author> spec = Specification.where((root, cq, cb) -> (cb.greaterThan(root.get(Author_.id), 0L)));
+        return authorRepository.findAll(spec);
     }
 
 }
