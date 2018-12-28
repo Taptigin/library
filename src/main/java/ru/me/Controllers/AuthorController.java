@@ -14,12 +14,12 @@ import ru.me.services.AuthorService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/library")
-public class LibraryController {
+@RequestMapping("/author")
+public class AuthorController {
     @Autowired
     private AuthorService authorService;
 
-    @RequestMapping(value = "/addAuthor", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity addAuthor(@RequestBody Author author){
         authorService.createAuthor(author);
         return new ResponseEntity("Author saved successfully", HttpStatus.OK);
@@ -29,6 +29,11 @@ public class LibraryController {
     public synchronized List<Author> getAuthor(){
         List<Author> authorList = authorService.findAll();
         return authorList;
+    }
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public synchronized List<Author> test() {
+        return authorService.test();
     }
 
 }
