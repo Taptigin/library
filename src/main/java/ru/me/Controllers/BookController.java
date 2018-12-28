@@ -34,7 +34,7 @@ public class BookController {
     }
 
     @RequestMapping(value = "/getCount", method = RequestMethod.GET)
-    public synchronized Integer getBookCountByName(String name){
+    public synchronized Long getBookCountByName(String name){
         return bookService.getCountBookByBookName(name);
     }
 }

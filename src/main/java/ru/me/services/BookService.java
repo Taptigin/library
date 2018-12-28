@@ -37,13 +37,8 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public Integer getCountBookByBookName(String bookName){
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Book> criteriaQuery = cb.createQuery(Book.class);
-        Root<Book> bookRoot = criteriaQuery.from(Book.class);
-        criteriaQuery.where(cb.equal(bookRoot.get(Book_.name), bookName));
-        em.createQuery(criteriaQuery).getResultList();
-
-        return em.createQuery(criteriaQuery).getResultList().size();
+    public Long getCountBookByBookName(String bookName){
+        return bookRepository.count((root, criteriaQuery, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get(Book_.name), bookName));
     }
 }
