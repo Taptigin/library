@@ -35,16 +35,13 @@ public class AuthorService {
         authorRepository.save(author);
     }
 
-    public List<Author> findAllByName(String name){
-        return authorRepository.findAllByName(name);
-    }
 
     public List<Author> findAll(){
         return authorRepository.findAll();
     }
 
-    public List<Author> test() {
-        final Specification<Author> spec = Specification.where((root, cq, cb) -> (cb.greaterThan(root.get(Author_.id), 0L)));
+    public List<Author> findAuthorByName(String name) {
+        final Specification<Author> spec = Specification.where((root, cq, cb) -> (cb.equal(root.get(Author_.name), name)));
         return authorRepository.findAll(spec);
     }
 

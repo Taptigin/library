@@ -32,8 +32,8 @@ public class AuthorController {
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public synchronized List<Author> test() {
-        return authorService.test();
+    public synchronized List<Author> findAuthorByName(String name) {
+        return authorService.findAuthorByName(name);
     }
 
 }

@@ -12,5 +12,5 @@ import java.util.function.Predicate;
  */
 public interface AuthorRepository extends JpaRepository<Author, Long>, JpaSpecificationExecutor<Author> {
 
-    List<Author> findAllByName(String name);
+
 }
