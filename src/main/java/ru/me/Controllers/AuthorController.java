@@ -21,7 +21,12 @@ public class AuthorController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity addAuthor(@RequestBody Author author){
-        authorService.createAuthor(author);
+        try{
+            authorService.createAuthor(author);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity("Author name not unique", HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity("Author saved successfully", HttpStatus.OK);
     }
 

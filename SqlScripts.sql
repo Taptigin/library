@@ -33,7 +33,7 @@ minvalue 0;
 
 CREATE TABLE author (
   ID BIGINT NOT NULL PRIMARY KEY,
-  NAME VARCHAR(100)
+  NAME VARCHAR(100) UNIQUE
 );
 
 INSERT INTO author VALUES (1, 'Тестовый автор 1');
@@ -48,7 +48,7 @@ minvalue 0;
 
 CREATE TABLE Book(
   ID BIGINT PRIMARY KEY NOT NULL,
-  NAME VARCHAR(100),
+  NAME VARCHAR(100) UNIQUE ,
   authorId BIGINT REFERENCES author(id),
   releaseDate DATE
 );
