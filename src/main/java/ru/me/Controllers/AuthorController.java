@@ -32,7 +32,7 @@ public class AuthorController {
     }
 
     @RequestMapping(value = "/getByName", method = RequestMethod.GET)
-    public synchronized List<Author> findAuthorByName(String name) {
+    public synchronized List<Author> findAuthorByName(@RequestParam(value = "authorName") String name) {
         return authorService.findAuthorByName(name);
     }
 
