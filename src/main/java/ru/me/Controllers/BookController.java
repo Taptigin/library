@@ -23,7 +23,7 @@ public class BookController {
     private BookService bookService;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public synchronized ResponseEntity addAuthor(@RequestBody Book book){
+    public synchronized ResponseEntity addBook(@RequestBody Book book){
         bookService.createBook(book);
         return new ResponseEntity("Book saved successfully", HttpStatus.OK);
     }
