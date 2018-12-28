@@ -32,4 +32,9 @@ public class BookController {
     public synchronized List<Book> getAllBook(){
         return bookService.getAllBook();
     }
+
+    @RequestMapping(value = "/getCount", method = RequestMethod.GET)
+    public synchronized Integer getBookCountByName(String name){
+        return bookService.getCountBookByBookName(name);
+    }
 }
