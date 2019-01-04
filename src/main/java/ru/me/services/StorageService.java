@@ -33,6 +33,16 @@ public class StorageService {
         storageRepository.save(storage);
     }
 
+    public void decrementBookCountByBookNameAndBookCount(String bookName, int bookCount){
+        Storage storage = storageRepository.getOne(bookService.getBookIdByBookName(bookName));
+        if (storage.getBookCount() - bookCount >= 0){
+            storage.setBookCount(storage.getBookCount() - bookCount);
+        }else{
+            storage.setBookCount(0);
+        }
+        storageRepository.save(storage);
+    }
+
     public void addNewBook(Book book){
         book = bookService.getBookByName(book.getName());
         Storage storage = new Storage();

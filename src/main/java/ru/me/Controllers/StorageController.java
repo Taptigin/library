@@ -33,12 +33,23 @@ public class StorageController {
     public synchronized ResponseEntity incrementBookCountByBookNameAndBookCount(@RequestParam("bookName") String bookName,
                                                                                 @RequestParam("bookCount") int bookCount){
         try{
+            bookCount = bookCount > 0 ? bookCount : 0;
             storageService.incrementBookCountByBookNameAndBookCount(bookName, bookCount);
         }
         catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity("Книга с названием - " + bookName + " не найдена", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity("Количество книг - " + bookName + " увеличено на " + bookCount, HttpStatus.OK);
+        return new ResponseEntity("Количество книг - " + bookName + " равно " +
+                storageService.getCountBookByBookId(bookService.getBookIdByBookName(bookName)), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "decrementBookCountByBookNameAndBookCount", method = RequestMethod.POST)
+    public synchronized ResponseEntity decrementBookCountByBookNameAndBookCount(@RequestParam("bookName") String bookName,
+                                                                                @RequestParam("bookCount") int bookCount){
+
+        storageService.decrementBookCountByBookNameAndBookCount(bookName, bookCount);
+        return new ResponseEntity("Количество книг - " + bookName + " равно " +
+                storageService.getCountBookByBookId(bookService.getBookIdByBookName(bookName)), HttpStatus.OK);
     }
 }
