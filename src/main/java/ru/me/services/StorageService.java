@@ -2,6 +2,7 @@ package ru.me.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.me.models.Book;
 import ru.me.models.Storage;
 import ru.me.repository.StorageRepository;
 
@@ -29,6 +30,14 @@ public class StorageService {
     public void incrementBookCountByBookNameAndBookCount(String bookName, int bookCount){
         Storage storage = storageRepository.getOne(bookService.getBookIdByBookName(bookName));
         storage.setBookCount(storage.getBookCount() + bookCount);
+        storageRepository.save(storage);
+    }
+
+    public void addNewBook(Book book){
+        book = bookService.getBookByName(book.getName());
+        Storage storage = new Storage();
+        storage.setBookId(book.getId());
+        storage.setBookCount(1);
         storageRepository.save(storage);
     }
 }

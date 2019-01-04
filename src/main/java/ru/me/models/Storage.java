@@ -24,7 +24,6 @@ public class Storage implements Serializable{
 
     @Id
     @Column(name = "bookid")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long bookId;
 
     @OneToOne(cascade = CascadeType.ALL)

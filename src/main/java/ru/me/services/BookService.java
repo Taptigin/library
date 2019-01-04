@@ -2,11 +2,13 @@ package ru.me.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.me.models.Author;
 import ru.me.models.Book;
 import ru.me.models.Book_;
 import ru.me.repository.BookRepository;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -21,12 +23,26 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
+    @Autowired
+    private StorageService storageService;
+
+    @Autowired
+    private AuthorService authorService;
+
     public BookService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
 
     public void createBook(Book book) throws Exception{
-        bookRepository.save(book);
+        Author author = authorService.findAuthorByName(book.getAuthor().getName()).get(0);
+
+        Book bookForSave = new Book();
+        bookForSave.setName(book.getName());
+        bookForSave.setAuthorId(author.getId());
+        bookForSave.setReleaseDate(book.getReleaseDate());
+
+        bookRepository.save(bookForSave);
+        storageService.addNewBook(book);
     }
 
     public List<Book> getAllBook(){
@@ -40,5 +56,9 @@ public class BookService {
 
     public Long getBookIdByBookName(String bookName){
         return bookRepository.findAllByName(bookName).get(0).getId();
+    }
+
+    public Book getBookByName(String bookName){
+        return bookRepository.findAllByName(bookName).get(0);
     }
 }

@@ -42,6 +42,9 @@ public class Book implements Serializable{
     @Column(name = "releasedate")
     private Date releaseDate;
 
+    @Column(name = "authorid")
+    private Long authorId;
+
 
 
 }
