@@ -8,7 +8,6 @@ import ru.me.models.Book_;
 import ru.me.repository.BookRepository;
 
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**
