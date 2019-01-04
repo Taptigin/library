@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import ru.me.services.AuthorService;
 import ru.me.services.BookService;
+import ru.me.services.StorageService;
 
 
 @ComponentScan
@@ -18,6 +19,8 @@ public class Application  {
     private AuthorService authorService;
     @Autowired
     private BookService bookService;
+    @Autowired
+    private StorageService storageService;
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

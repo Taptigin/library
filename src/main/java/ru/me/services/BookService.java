@@ -37,4 +37,8 @@ public class BookService {
         return bookRepository.count((root, criteriaQuery, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get(Book_.name), bookName));
     }
+
+    public Long getBookIdByBookName(String bookName){
+        return bookRepository.findAllByName(bookName).get(0).getId();
+    }
 }
