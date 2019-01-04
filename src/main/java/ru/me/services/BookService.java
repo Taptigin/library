@@ -33,7 +33,15 @@ public class BookService {
     }
 
     public void createBook(Book book) throws Exception{
-        Author author = authorService.findAuthorByName(book.getAuthor().getName()).get(0);
+        List<Author> lst = authorService.findAuthorByName(book.getAuthor().getName());
+        Author author = lst.isEmpty() ? null : lst.get(0);
+
+        if (author == null){
+            author = new Author();
+            author.setName(book.getAuthor().getName());
+            authorService.createAuthor(author);
+            author = authorService.findAuthorByName(author.getName()).get(0);
+        }
 
         Book bookForSave = new Book();
         bookForSave.setName(book.getName());
