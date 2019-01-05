@@ -6,8 +6,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ru.me.models.AppUser;
+import ru.me.models.AppUserForm;
 import ru.me.utils.WebUtils;
 
 @Controller
@@ -77,5 +83,53 @@ public class MainController {
 
         return "403Page";
     }
+
+    @RequestMapping("/registerSuccessful")
+    public String viewRegisterSuccessful(Model model) {
+
+        return "registerSuccessfulPage";
+    }
+
+    // Show Register page.
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public String viewRegister(Model model) {
+
+        AppUserForm form = new AppUserForm();
+
+        model.addAttribute("appUserForm", form);
+
+        return "registerPage";
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String saveRegister(Model model,
+                               @ModelAttribute("appUserForm") @Validated AppUserForm appUserForm,
+                               BindingResult result,
+                               final RedirectAttributes redirectAttributes) {
+
+        // Validate result
+        if (result.hasErrors()) {
+            return "registerPage";
+        }
+        AppUser newUser= null;
+        try {
+            newUser = new AppUser();
+            newUser.setUserName(appUserForm.getUserName());
+            newUser.setEncrytedPassword(appUserForm.getPassword());
+        }
+        // Other error!!
+        catch (Exception e) {
+  //          List<Country> countries = countryDAO.getCountries();
+   //         model.addAttribute("countries", countries);
+            model.addAttribute("errorMessage", "Error: " + e.getMessage());
+            return "registerPage";
+        }
+
+        redirectAttributes.addFlashAttribute("flashUser", newUser);
+
+        return "redirect:/registerSuccessful";
+    }
+
+
 
 }
