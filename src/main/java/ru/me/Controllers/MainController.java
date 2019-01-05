@@ -119,8 +119,6 @@ public class MainController {
         }
         // Other error!!
         catch (Exception e) {
-  //          List<Country> countries = countryDAO.getCountries();
-   //         model.addAttribute("countries", countries);
             model.addAttribute("errorMessage", "Error: " + e.getMessage());
             return "registerPage";
         }
