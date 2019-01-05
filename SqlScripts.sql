@@ -10,19 +10,6 @@ LC_COLLATE = 'Russian_Russia.1251'
 LC_CTYPE = 'Russian_Russia.1251'
 CONNECTION LIMIT = -1;
 
--- Users
-CREATE SEQUENCE userSeq
-START with 1
-increment by 1
-maxvalue 100000
-minvalue 0;
-
-CREATE TABLE users (
-  ID BIGINT PRIMARY KEY NOT NULL,
-  Name VARCHAR(100),
-  Password VARCHAR(100),
-  isAdmin BOOLEAN NOT NULL);
--- End Users
 
 -- Author
 CREATE SEQUENCE authorSeq
@@ -63,7 +50,7 @@ minvalue 0;
 
 CREATE TABLE readingRoom (
   ID BIGINT NOT NULL PRIMARY KEY ,
-  UserId BIGINT REFERENCES users(ID),
+  UserName VARCHAR(36) REFERENCES APP_USER(USER_NAME),
   BookId BIGINT REFERENCES book(ID)
 );
 --End Reading Room
