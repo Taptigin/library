@@ -2,6 +2,7 @@ package ru.me.Controllers;
 
 import java.security.Principal;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -14,10 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.me.models.AppUser;
 import ru.me.models.AppUserForm;
+import ru.me.services.UserService;
 import ru.me.utils.WebUtils;
 
 @Controller
 public class MainController {
+
+    @Autowired
+    UserService userService;
 
     @RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
     public String welcomePage(Model model) {
@@ -116,6 +121,8 @@ public class MainController {
             newUser = new AppUser();
             newUser.setUserName(appUserForm.getUserName());
             newUser.setEncrytedPassword(appUserForm.getPassword());
+            newUser.setEnabled(1);
+            userService.createNewUser(newUser);
         }
         // Other error!!
         catch (Exception e) {

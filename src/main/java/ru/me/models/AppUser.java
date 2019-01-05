@@ -31,6 +31,6 @@ public class AppUser {
     private String encrytedPassword;
 
     @Column(name = "Enabled", length = 1, nullable = false)
-    private boolean enabled;
+    private int enabled;
 
 }
