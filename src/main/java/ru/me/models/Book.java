@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
@@ -35,16 +36,12 @@ public class Book implements Serializable{
     @Column(name = "name")
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @OneToOne (optional=false, cascade=CascadeType.ALL)
+    @JoinColumn(name="authorid")
     private Author author;
 
     @Column(name = "releasedate")
     private Date releaseDate;
-
-    @Column(name = "authorid")
-    private Long authorId;
-
 
 
 }

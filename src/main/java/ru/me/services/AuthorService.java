@@ -30,6 +30,10 @@ public class AuthorService {
         authorRepository.save(author);
     }
 
+    public Author findOneAuthor(Long authorId){
+        return authorRepository.getOne(authorId);
+    }
+
 
     public List<Author> findAll(){
         return authorRepository.findAll();

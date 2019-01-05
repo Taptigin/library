@@ -8,6 +8,7 @@ import ru.me.models.Book_;
 import ru.me.repository.BookRepository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 /**
@@ -33,10 +34,14 @@ public class BookService {
     }
 
     public void createBook(Book book) throws Exception{
-        List<Author> lst = authorService.findAuthorByName(book.getAuthor().getName());
-        Author author = lst.isEmpty() ? null : lst.get(0);
+        Author author = null;
 
-        if (author == null){
+        author = authorService.findOneAuthor(book.getAuthor().getId());
+
+        try{
+            System.out.println(author.getId());
+        }catch (javax.persistence.EntityNotFoundException ex){
+            ex.printStackTrace();
             author = new Author();
             author.setName(book.getAuthor().getName());
             authorService.createAuthor(author);
@@ -45,7 +50,7 @@ public class BookService {
 
         Book bookForSave = new Book();
         bookForSave.setName(book.getName());
-        bookForSave.setAuthorId(author.getId());
+        bookForSave.setAuthor(author);
         bookForSave.setReleaseDate(book.getReleaseDate());
 
         bookRepository.save(bookForSave);

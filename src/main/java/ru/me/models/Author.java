@@ -18,7 +18,7 @@ import java.util.Objects;
 public class Author implements Serializable{
 
     private static final long serialVersionUID = 4583313438864535725L;
-    private long id;
+    private Long id;
     private String name;
     private final static String SEQUENCE_NAME = "authorSeq";
 
@@ -26,11 +26,11 @@ public class Author implements Serializable{
     @Column(name = "id", nullable = false)
     @GeneratedValue(generator = SEQUENCE_NAME, strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = SEQUENCE_NAME, allocationSize = 1)
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
