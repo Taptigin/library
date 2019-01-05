@@ -14,7 +14,12 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserRoleService userRoleService;
+
     public void createNewUser(AppUser appUser){
         userRepository.save(appUser);
+        AppUser commitedUser = userRepository.findByUserName(appUser.getUserName());
+        userRoleService.createRoleForNewUser(commitedUser);
     }
 }

@@ -5,6 +5,7 @@ import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +24,9 @@ public class MainController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
     public String welcomePage(Model model) {
@@ -120,7 +124,7 @@ public class MainController {
         try {
             newUser = new AppUser();
             newUser.setUserName(appUserForm.getUserName());
-            newUser.setEncrytedPassword(appUserForm.getPassword());
+            newUser.setEncrytedPassword(passwordEncoder.encode(appUserForm.getPassword()));
             newUser.setEnabled(1);
             userService.createNewUser(newUser);
         }
