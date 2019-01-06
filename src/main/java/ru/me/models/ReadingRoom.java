@@ -37,4 +37,7 @@ public class ReadingRoom implements Serializable{
     @OneToOne(optional=false, cascade= CascadeType.ALL)
     @JoinColumn(name="id")
     private Book book;
+
+    @Column(name = "bookid")
+    private Long bookId;
 }
