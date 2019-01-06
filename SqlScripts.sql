@@ -36,9 +36,10 @@ minvalue 0;
 CREATE TABLE Book(
   ID BIGINT PRIMARY KEY NOT NULL,
   NAME VARCHAR(100) UNIQUE ,
-  authorId BIGINT REFERENCES author(id),
-  releaseDate DATE
-);
+  authorId BIGINT,
+  releaseDate DATE,
+  FOREIGN KEY (authorId) REFERENCES author(ID));
+
 --End Book
 
 --Reading Room

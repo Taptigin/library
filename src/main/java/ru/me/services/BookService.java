@@ -33,24 +33,28 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public void createBook(Book book) throws Exception{
+    public void createBook(Book book, String authorName) throws Exception{
         Author author = null;
 
-        author = authorService.findOneAuthor(book.getAuthor().getId());
-
-        try{
-            System.out.println(author.getId());
-        }catch (javax.persistence.EntityNotFoundException ex){
-            ex.printStackTrace();
-            author = new Author();
-            author.setName(book.getAuthor().getName());
-            authorService.createAuthor(author);
-            author = authorService.findAuthorByName(author.getName()).get(0);
+        author = authorService.findOneAuthor(book.getAuthorId());
+        if (authorName != null && !authorName.isEmpty() && !authorService.findAuthorByName(authorName).isEmpty()){
+            author = authorService.findAuthorByName(authorName).get(0);
         }
+
+            try{
+                System.out.println(author.getId());
+            }catch (javax.persistence.EntityNotFoundException ex){
+                ex.printStackTrace();
+
+                author = new Author();
+                author.setName(authorName);
+                authorService.createAuthor(author);
+                author = authorService.findAuthorByName(author.getName()).get(0);
+            }
 
         Book bookForSave = new Book();
         bookForSave.setName(book.getName());
-        bookForSave.setAuthor(author);
+        bookForSave.setAuthorId(author.getId());
         bookForSave.setReleaseDate(book.getReleaseDate());
 
         bookRepository.save(bookForSave);

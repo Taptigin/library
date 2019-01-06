@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.me.models.Book;
 import ru.me.services.BookService;
@@ -23,9 +24,9 @@ public class BookController {
     private BookService bookService;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public synchronized ResponseEntity addBook(@RequestBody Book book){
+    public synchronized ResponseEntity addBook(@RequestParam(value = "authorName", required = false)String authorName, @RequestBody Book book){
         try{
-            bookService.createBook(book);
+            bookService.createBook(book, authorName);
         }catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity("Book name not unique", HttpStatus.BAD_REQUEST);

@@ -2,15 +2,11 @@ package ru.me.models;
 
 import lombok.Data;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -36,9 +32,8 @@ public class Book implements Serializable{
     @Column(name = "name")
     private String name;
 
-    @OneToOne (optional=false, cascade=CascadeType.ALL)
-    @JoinColumn(name="authorid")
-    private Author author;
+    @Column(name="authorid")
+    private Long authorId;
 
     @Column(name = "releasedate")
     private Date releaseDate;
