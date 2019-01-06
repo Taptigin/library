@@ -6,7 +6,9 @@ import ru.me.models.Book;
 import ru.me.models.ReadingRoom;
 import ru.me.models.ReadingRoom_;
 import ru.me.repository.ReadingRoomRepository;
+import ru.me.utils.OrderBookErorrs;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,26 +27,28 @@ public class ReadingRoomService {
     @Autowired
     private BookService bookService;
 
-    public boolean orderBook(String bookName, String userName){
+    public OrderBookErorrs orderBook(String bookName, String userName){
         Book book = bookService.getBookByName(bookName);
-        boolean sucsess = false;
+
+        if (book == null) return OrderBookErorrs.NOT_FOUND;
+        if (getBooksByUserName(userName).contains(book)) return OrderBookErorrs.BOOK_IS_ALREADY;
+
         if (storageService.getCountBookByBookId(book.getId()) > 0){
             storageService.decrementBookCountByBookNameAndBookCount(bookName, 1);
 
-            sucsess  = true;
 
             ReadingRoom readingRoom = new ReadingRoom();
             readingRoom.setBookId(book.getId());
             readingRoom.setUserName(userName);
             readingRoomRepository.save(readingRoom);
-        }
-        return sucsess;
+            return OrderBookErorrs.OK;
+        } else return OrderBookErorrs.NOT_FOUND;
     }
 
-    public List<Book> getBookByUserName(String userName){
+    public List<Book> getBooksByUserName(String userName){
         List<Long> bookIds = readingRoomRepository.findAll((root, criteriaQuery, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get(ReadingRoom_.userName), userName))
                 .stream().map(readingRoom -> readingRoom.getBookId()).collect(Collectors.toList());
-        return bookService.getAllBookByIds(bookIds);
+        return bookIds.isEmpty() ? Collections.EMPTY_LIST : bookService.getAllBookByIds(bookIds);
     }
 }

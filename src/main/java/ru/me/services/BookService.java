@@ -76,6 +76,7 @@ public class BookService {
     }
 
     public Book getBookByName(String bookName){
-        return bookRepository.findAllByName(bookName).get(0);
+        List<Book> bookList = bookRepository.findAllByName(bookName);
+        return bookList.isEmpty() ? null : bookList.get(0);
     }
 }

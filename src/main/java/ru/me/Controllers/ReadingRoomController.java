@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.me.services.ReadingRoomService;
+import ru.me.utils.OrderBookErorrs;
 
 import java.security.Principal;
 
@@ -23,9 +24,9 @@ public class ReadingRoomController {
     @RequestMapping(value = "/orderBook", method = RequestMethod.PUT)
     public synchronized String orderBook(@RequestParam(value = "bookName") String bookName, Model model, Principal principal){
 
-        boolean sucsess = readingRoomService.orderBook(bookName, principal.getName());
+        OrderBookErorrs result = readingRoomService.orderBook(bookName, principal.getName());
 
-        return sucsess ? "Книга -\"" + bookName + "\" заказана пользователем - " + principal.getName()
-                : "Нет доступных книг с названием - \"" + bookName + "\"";
+        if (result.equals(OrderBookErorrs.OK)) return result.getErrorDescrption() + " - " + bookName;
+        return result.getErrorDescrption();
     }
 }
