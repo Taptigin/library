@@ -51,4 +51,8 @@ public class ReadingRoomService {
                 .stream().map(readingRoom -> readingRoom.getBookId()).collect(Collectors.toList());
         return bookIds.isEmpty() ? Collections.EMPTY_LIST : bookService.getAllBookByIds(bookIds);
     }
+
+    public List<ReadingRoom> getAllOrders(){
+        return readingRoomRepository.findAll();
+    }
 }
