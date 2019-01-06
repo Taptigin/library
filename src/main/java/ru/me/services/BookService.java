@@ -61,6 +61,11 @@ public class BookService {
         return bookRepository.findAll();
     }
 
+    public List<Book> getAllBookByIds(List<Long> bookIds){
+        return bookRepository.findAll((root, criteriaQuery, criteriaBuilder) ->
+                root.get(Book_.id).in(bookIds));
+    }
+
     public Long getCountBookByBookName(String bookName){
         return bookRepository.count((root, criteriaQuery, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get(Book_.name), bookName));
