@@ -36,7 +36,6 @@ public class ReadingRoomService {
         if (storageService.getCountBookByBookId(book.getId()) > 0){
             storageService.decrementBookCountByBookNameAndBookCount(bookName, 1);
 
-
             ReadingRoom readingRoom = new ReadingRoom();
             readingRoom.setBookId(book.getId());
             readingRoom.setUserName(userName);
@@ -54,5 +53,28 @@ public class ReadingRoomService {
 
     public List<ReadingRoom> getAllOrders(){
         return readingRoomRepository.findAll();
+    }
+
+    public String returnBook(String bookName, String userName){
+        Book book = bookService.getBookByName(bookName);
+        if (book == null) return OrderBookErorrs.NOT_FOUND.getErrorDescrption();
+
+        List<Book> userBooks = getBooksByUserName(userName);
+        if (!userBooks.contains(book)){
+            return "Книга - " + bookName + ", у пользователя " + userName + " не найдена.";
+        }else {
+            ReadingRoom currentRow = findByUserNameAndBookName(book.getId(), userName);
+            if (currentRow != null){
+                readingRoomRepository.delete(currentRow);
+                storageService.incrementBookCountByBookNameAndBookCount(bookName, 1);
+                return "Книга - " + bookName + " возвращена на склад";
+            } else return "Книга - " + bookName + ", у пользователя " + userName + " не найдена.";
+        }
+
+    }
+
+    public ReadingRoom findByUserNameAndBookName(Long bookId, String userName){
+        List<ReadingRoom> list =readingRoomRepository.findByBookIdAndUserName(bookId, userName);
+        return list.isEmpty() ? null : list.get(0);
     }
 }
