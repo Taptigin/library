@@ -37,7 +37,7 @@ public class ReadingRoomController {
         return readingRoomService.getAllOrders();
     }
 
-    @RequestMapping(value = "/returnBook", method = RequestMethod.POST)
+    @RequestMapping(value = "/returnBook", method = RequestMethod.DELETE)
     public synchronized String returnBook(@RequestParam(value = "bookName") String bookName, Model model, Principal principal){
         return readingRoomService.returnBook(bookName, principal.getName());
     }
