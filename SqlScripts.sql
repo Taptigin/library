@@ -23,7 +23,7 @@ CREATE TABLE author (
   NAME VARCHAR(100) UNIQUE
 );
 
-INSERT INTO author VALUES (1, 'Тестовый автор 1');
+
 -- End Author
 
 --Book
