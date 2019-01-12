@@ -23,7 +23,7 @@ CREATE TABLE author (
   NAME VARCHAR(100) UNIQUE
 );
 
-
+INSERT INTO author VALUES (nextval('authorSeq'), 'Тестовый автор 1');
 -- End Author
 
 --Book
@@ -40,6 +40,7 @@ CREATE TABLE Book(
   releaseDate DATE,
   FOREIGN KEY (authorId) REFERENCES author(ID));
 
+INSERT INTO Book VALUES (nextval('bookseq'), 'Тестовая книга 1', 1, '2018-12-12');
 --End Book
 
 --Reading Room
@@ -61,6 +62,8 @@ CREATE TABLE Storage (
   BookId BIGINT REFERENCES book(ID),
   BookCount INTEGER
 );
+
+INSERT INTO Storage VALUES (2, 5);
 --End Storage
 
 -- security tables
