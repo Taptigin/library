@@ -63,7 +63,7 @@ CREATE TABLE Storage (
   BookCount INTEGER
 );
 
-INSERT INTO Storage VALUES (2, 5);
+INSERT INTO Storage VALUES (1, 5);
 --End Storage
 
 -- security tables
