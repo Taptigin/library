@@ -1,3 +1,5 @@
+DROP ROLE IF EXISTS libraryAdmin;
+
 CREATE ROLE libraryAdmin LOGIN
   ENCRYPTED PASSWORD '123'
   SUPERUSER INHERIT CREATEDB CREATEROLE REPLICATION;
@@ -6,12 +8,13 @@ CREATE DATABASE "Library"
 WITH OWNER = libraryadmin
 ENCODING = 'UTF8'
 TABLESPACE = pg_default
-LC_COLLATE = 'Russian_Russia.1251'
-LC_CTYPE = 'Russian_Russia.1251'
+-- LC_COLLATE = 'Russian_Russia.1251'
+-- LC_CTYPE = 'Russian_Russia.1251'
 CONNECTION LIMIT = -1;
 
 
 -- Author
+drop sequence if exists authorSeq;
 CREATE SEQUENCE authorSeq
 START with 1
 increment by 1
@@ -50,21 +53,8 @@ increment by 1
 maxvalue 100000
 minvalue 0;
 
-CREATE TABLE readingRoom (
-  ID BIGINT NOT NULL PRIMARY KEY ,
-  UserName VARCHAR(36) REFERENCES APP_USER(USER_NAME),
-  BookId BIGINT REFERENCES book(ID)
-);
---End Reading Room
-
---Storage
-CREATE TABLE Storage (
-  BookId BIGINT REFERENCES book(ID),
-  BookCount INTEGER
-);
-
 INSERT INTO Storage VALUES (1, 5);
---End Storage
+
 
 -- security tables
 -- Create table
@@ -81,6 +71,20 @@ alter table APP_USER
 
 alter table APP_USER
   add constraint APP_USER_UK unique (USER_NAME);
+
+CREATE TABLE readingRoom (
+                             ID BIGINT NOT NULL PRIMARY KEY ,
+                             UserName VARCHAR(36) REFERENCES APP_USER(USER_NAME),
+                             BookId BIGINT REFERENCES book(ID)
+);
+--End Reading Room
+
+--Storage
+CREATE TABLE Storage (
+                         BookId BIGINT REFERENCES book(ID),
+                         BookCount INTEGER
+);
+--End Storage
 
 
 -- Create table
